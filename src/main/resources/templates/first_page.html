@@ -59,6 +59,7 @@
             text-align: right;
             color: black;
             width: 100%;
+            cursor: pointer;
             background-color: #4CAF50;
         }
 
@@ -74,10 +75,10 @@
     </style>
     <head>
         <title>MainPage</title>
+<div sec:authorize="authenticated">
+     <a class="username" th:text="${#authentication.getName()}" th:href="@{/user/{name}(name=${#authentication.getName()})}">name</a>
 
-        <div th:object="${user}" th:if="${user!=null}">
-            <h3  class="username" th:text="${user.getName()}">text</h3>
-        </div>
+</div>
 <div class="name">
     <h1 >LinkLink</h1>
 </div>
@@ -100,21 +101,23 @@
   </div>
 
 
-<span sec:authorize="hasRole('USER_ROLE')">
+
+<span sec:authorize="hasAuthority('ADMIN')">
 
     <form action="/admin" method="get">
         <input type="submit" value="adminCab">
     </form>
 
 </span>
-<div  th:object=" ${user}" th:if="${user==null}">
+  <div sec:authorize="anonymous">
 
     <h4><a href="/login">Войти</a></h4>
     <h4><a href="/registration">Зарегистрироваться</a></h4>
-</div>
- <div th:object=" ${user}" th:if="${user!=null}">
-
-        <h4><a href="/logout">Выйти</a></h4>
+  </div>
+  <div sec:authorize="authenticated">
+<form action="/logout" method="post">
+    <input type="submit" value="logout">
+        </form>
  </div>
 
 

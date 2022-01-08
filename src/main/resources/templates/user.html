@@ -70,12 +70,21 @@
 </head>
 <body>
 <h1 class="username" th:text="${user.getName()}">name</h1>
-<for  th:method="DELETE"  th:object="${user}"  th:action="@{/user/delete}" name="user">
-    <select  th:object="${list}"  >
-        <option value="">Your links</option>
-        <option  th:each="link : ${list}" th:value="${link}" name="link" th:text="${link.getLongLink()}"  ></option>
+<form th:action="@{/user/{name}/change(name=${user.getName()})}"  th:method="GET">
+    <input type="submit" value="change profile">
+</form>
+<div th:each="link:${list}">
+<a th:text="${link.getLongLink()}">link</a>
+    <form th:method="DELETE"  th:action="@{/user/{linkId}/deleteLink(linkId=${link.getId})}" >
         <input type="submit" value="delete">
-    </select>
+
+</form>
+</div>
+<!--    <select  th:object="${list}"  >-->
+<!--        <option value="">Your links</option>-->
+<!--        <option  th:each="link : ${list}" th:value="${link}" name="link" th:text="${link.getLongLink()}"  ></option>-->
+<!--        <input type="submit" value="delete">-->
+<!--    </select>-->
 
 
 </for>
