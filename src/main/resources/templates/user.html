@@ -35,12 +35,12 @@
 
         .container{
             background-color: #4CAF50;
-            color: white;
+            color: black;
             padding: 16px 20px;
             margin: 8px 0;
             border: none;
-            cursor: pointer;
             width: 100%;
+            text-align: right;
             opacity: 0.9;
         }
 
@@ -68,26 +68,34 @@
     </style>
     <title>UserInfo</title>
 </head>
-<body>
-<h1 class="username" th:text="${user.getName()}">name</h1>
+<body >
+<h1  class="container" th:text="${user.getName()}">name</h1>
 <form th:action="@{/user/{name}/change(name=${user.getName()})}"  th:method="GET">
     <input type="submit" value="change profile">
 </form>
 <div th:each="link:${list}">
-<a th:text="${link.getLongLink()}">link</a>
-    <form th:method="DELETE"  th:action="@{/user/{linkId}/deleteLink(linkId=${link.getId})}" >
-        <input type="submit" value="delete">
+    <table  >
+        <tr style="height: 21px;">
+            <th>Short Link</th>
+            <th>delete</th>
+        </tr>
 
-</form>
+        <td th:text="${link.getShortLink()}" th:title="${link.getLongLink()}">link </td>
+        <td >
+            <form th:method="DELETE" th:action="@{/user/{linkId}/deleteLink(linkId=${link.getId})}" >
+                <input type="submit" value="delete">
+            </form>
+        </td>
+
+
+
+    </table>
+
 </div>
-<!--    <select  th:object="${list}"  >-->
-<!--        <option value="">Your links</option>-->
-<!--        <option  th:each="link : ${list}" th:value="${link}" name="link" th:text="${link.getLongLink()}"  ></option>-->
-<!--        <input type="submit" value="delete">-->
-<!--    </select>-->
 
 
-</for>
+
+
 
 
 </body>

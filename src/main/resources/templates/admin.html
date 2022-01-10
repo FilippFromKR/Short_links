@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" >
+    <title>Title</title>
+</head>
+<body>
+ <div th:each="user:${list}">
+     <a th:text="${user.getName()}" th:href="@{/user/{name}(name=${user.getName()})}">name</a>
+     <div th:if="${user.hasRole('ADMIN')}">
+             <a>admin</a>
+             </div>
+     <div th:if="${!user.hasRole('ADMIN')}">
+         <form th:method="POST" th:action="@{/admin/{name}(name=${user.getName()})}">
+             <input type="submit" value="addAdminRole">
+         </form>
+     </div>
+       <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}">
+           <input type="submit" value="delete">
+       </form>
+     <input type="submit" value="will be soon">
+ </div>
+
+
+</body>
+</html>

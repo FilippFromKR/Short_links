@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <style>
+
+
+
+    </style>
+    <title>changeProfile</title>
+</head>
+<body>
+<form th:method="PATCH" th:object="${user}"  th:action="@{/user/{name}(name=${user.getName()})}">
+    <input th:field="${user.name}" type="text"   id="name">
+    <label for="name" >name </label>
+    <br/>
+    <input  type="password" th:field="${user.password}" id="password">
+    <label for="password" >password </label>
+    <br/>
+    <input  type="password" th:field="${user.passwordConfirm}" id="passwordConfirm">
+    <label for="passwordConfirm" >ConfirmPassword </label>
+    <input  type="submit" value="save">
+</form>
+<div th:if="${errorsMessage}!=null">
+    <a th:text="${errorsMessage}">text</a>
+    </div>
+</body>
+</html>
