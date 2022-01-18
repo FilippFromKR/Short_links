@@ -1,102 +1,37 @@
 <!DOCTYPE html>
 <html lang="en"  xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <meta charset="UTF-8"name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: white;}
-
-        * {box-sizing: border-box;
-        }
-
-
-
-        input[type=text], input[type=password] {
-            width: 100%;
-            padding: 15px;
-            margin: 5px 0 22px 0;
-            display: inline-block;
-            border: none;
-            background: #f1f1f1;
-        }
-
-        input[type=text]:focus, input[type=password]:focus {
-            background-color: #ddd;
-            outline: none;
-        }
-
-
-        hr {
-            border: 1px solid #f1f1f1;
-            margin-bottom: 25px;
-        }
-
-
-        .container{
-            background-color: #4CAF50;
-            color: black;
-            padding: 16px 20px;
-            margin: 8px 0;
-            border: none;
-            width: 100%;
-            text-align: right;
-            opacity: 0.9;
-        }
-
-
-        a {
-            color: dodgerblue;
-        }
-
-        .signin {
-            background-color: #f1f1f1;
-            text-align: center;
-        }
-        .submit {
-            background-color: #4CAF50;
-            color: white;
-            padding: 16px 20px;
-            margin: 8px 0;
-            border: black;
-            cursor: pointer;
-            width: 15px;
-            height: 10px;
-            opacity: 0.9;
-
-        }
-    </style>
+    <div>
+        <div th:insert="copyright/copyright::header"></div>
+    </div>
     <title>UserInfo</title>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+        <h1  class="user_name" th:text="${user.getName()}">name</h1>
+        <style>
+            .user_name{
+                margin-right: 10px;
+            }
+        </style>
+        <form th:action="@{/user/{name}/change(name=${user.getName()})}"  th:method="GET">
+            <input class="btn btn-primary" type="submit" value="change profile">
+        </form>
+    </nav>
+
 </head>
 <body >
-<h1  class="container" th:text="${user.getName()}">name</h1>
-<form th:action="@{/user/{name}/change(name=${user.getName()})}"  th:method="GET">
-    <input type="submit" value="change profile">
-</form>
-<div th:each="link:${list}">
-    <table  >
-        <tr style="height: 21px;">
-            <th>Short Link</th>
-            <th>delete</th>
-        </tr>
-
-        <td th:text="${link.getShortLink()}" th:title="${link.getLongLink()}">link </td>
-        <td >
-            <form th:method="DELETE" th:action="@{/user/{linkId}/deleteLink(linkId=${link.getId})}" >
-                <input type="submit" value="delete">
-            </form>
-        </td>
 
 
-
-    </table>
-
+<div class="list-group" th:each="link:${list}" >
+    <a th:href="${link.getLongLink()}" th:text="${link.getLongLink()}"  thclass="list-group-item list-group-item-action active">
+       link
+    </a>
+    <div class="alert alert-primary" role="alert" th:text="${link.getShortLink()}">
+  link
+    </div>
 </div>
 
-
-
-
-
-
 </body>
+<div>
+    <div th:insert="copyright/copyright::bootstrap_script"></div>
+</div>
 </html>

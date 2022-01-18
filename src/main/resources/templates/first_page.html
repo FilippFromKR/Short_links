@@ -1,129 +1,82 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html  xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" lang="en">
-
-
-
-    <meta charset="UTF-8"name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: white;}
-
-        * {box-sizing: border-box;
-        }
-
-
-        .container {
-            padding: 16px;
-            background-color: white;
-        }
-
-        input[type=text], input[type=password],.username {
-            width: 100%;
-            padding: 15px;
-            margin: 5px 0 22px 0;
-            display: inline-block;
-            border: none;
-            background: #f1f1f1;
-        }
-
-        input[type=text]:focus, input[type=password]:focus {
-            background-color: #ddd;
-            outline: none;
-        }
-
-
-        hr {
-            border: 1px solid #f1f1f1;
-            margin-bottom: 25px;
-        }
-
-
-        .submit {
-            background-color: #4CAF50;
-            color: white;
-            padding: 16px 20px;
-            margin: 8px 0;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-            opacity: 0.9;
-        }
-
-
-        a {
-            color: dodgerblue;
-        }
-        .username{
-            text-align: right;
-            color: black;
-            width: 100%;
-            cursor: pointer;
-            background-color: #4CAF50;
-        }
-
-        .name {
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            padding: 16px 20px;
-            margin: 8px 0;
-            width: 100%;
-
-        }
-    </style>
+<meta charset="UTF-8">
+<div>
+    <div th:insert="copyright/copyright::header"></div>
+</div>
     <head>
-        <title>MainPage</title>
-<div sec:authorize="authenticated">
-     <a class="username" th:text="${#authentication.getName()}" th:href="@{/user/{name}(name=${#authentication.getName()})}">name</a>
+        <title>LinkLink</title>
+        <nav  class="navbar navbar-expand-lg navbar-light bg-light ">
+            <a class="navbar-brand">LinkLink</a>
 
-</div>
-<div class="name">
-    <h1 >LinkLink</h1>
-</div>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li sec:authorize="authenticated" class="nav-item active">
+                        <a class="navbar-brand" th:text="${#authentication.getName()}" th:href="@{/user/{name}(name=${#authentication.getName()})}">name</a>
+                    </li>
+                    <li sec:authorize="!authenticated" class="nav-item active">
+                        <a class="nav-link" href="/login">login <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li   sec:authorize="!authenticated"  class="nav-item">
+                        <a class="nav-link" href="/registration">registration</a>
+                    </li>
+                    <li sec:authorize="hasAuthority('ADMIN')" class="nav-item li-block" >
+                        <style>
+                            .li-block{margin-right: 10px;}
+                        </style>
+                        <form class="form-inline" action="/admin" method="get">
+                            <input class="btn btn-primary"  type="submit" value="Admin menu">
+                        </form>
+                    </li>
+                    <li  sec:authorize="authenticated"  class="nav-item" >
+                        <form class="form-inline" action="/logout" method="post">
+                            <input class="btn btn-primary"  type="submit" value="Logout">
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+
+
     </head>
-  <body>
-  <div class="container">
- <form th:method="POST" th:object="${link}">
-     <br><br>
- <input type="text"  id="longLink"  th:field="*{longLink}" />
-     <br>
-    <a th:if="${#fields.hasErrors()}" th:onerror="*{longLink}">text</a>
-     <br>
-     <br>
-     <input type="submit" value="get Short Link" class="submit"/>
- </form>
-      <div th:object="${link}" th:if="${!link.isEmpty()}">
-          <h2 th:text="*{shortLink}">Your Link</h2>
-
-      </div>
-  </div>
+<body>
 
 
-
-<span sec:authorize="hasAuthority('ADMIN')">
-
-    <form action="/admin" method="get">
-        <input type="submit" value="adminCab">
-    </form>
-
-</span>
-  <div sec:authorize="anonymous">
-
-    <h4><a href="/login">Войти</a></h4>
-    <h4><a href="/registration">Зарегистрироваться</a></h4>
-  </div>
-  <div sec:authorize="authenticated">
-<form action="/logout" method="post">
-    <input type="submit" value="logout">
+<form th:method="POST" th:object="${link}">
+        <input type="text" class="form-input" id="longLink"  th:field="*{longLink}"  placeholder="put your link" aria-label="Recipient's username" aria-describedby="button-addon2">
+        <div class="input-group-append">
+            <input class="btn btn-primary" type="submit" value="get short link">
+        </div>
         </form>
- </div>
+<style>
+    .form-input{
+        width: 100%;
+        height: 40px;
+        border: none;
+        border-bottom:1px solid #0d0a0a;
+        outline: none;
+        font-family: inherit;
+        color:#0d0a0a ;
+        background: transparent;
+    }
+</style>
 
-
-
-
+<div th:object="${link}" th:if="${!link.isEmpty()}">
+    <a class="nav-link">take your short link</a>
+    <div class="alert alert-primary" role="alert" th:text="${link.getShortLink()}">
+       link
+    </div>
+</div>
 
 
 </body>
+
+
+<div th:insert="copyright/copyright::bootstrap_script"></div>
+</div>
+
+
+
 </html>

@@ -1,85 +1,34 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"  lang="en">
+<html  lang="en">
 
-<meta charset="UTF-8"name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background-color:white;}
-
-        * {box-sizing: border-box;
-        }
-
-        .container {
-            padding: 64px;
-            background-color: white;
-        }
-
-        input[type=text], input[type=password] {
-            width: 100%;
-            padding: 15px;
-            margin: 5px 0 22px 0;
-            display: inline-block;
-            border: none;
-            background: #f1f1f1;
-        }
-
-        input[type=text]:focus, input[type=password]:focus {
-            background-color: #ddd;
-            outline: none;
-        }
-
-        hr {
-            border: 1px solid #f1f1f1;
-            margin-bottom: 25px;
-        }
-
-        .submit {
-            background-color: #4CAF50;
-            color: white;
-            padding: 16px 20px;
-            margin: 8px 0;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-            opacity: 0.9;
-        }
+<meta charset="UTF-8">
+<div>
+    <div th:insert="copyright/copyright::header"></div>
+</div>
 
 
-        a {
-            color: dodgerblue;
-        }
-
-
-        .login {
-            text-align: center;
-            background-color: #4CAF50;
-            color: white;
-            padding: 16px 20px;
-            margin: 8px 0;
-            width: 100%;
-
-
-        }
-    </style>
-    <title>Title</title>
-<head>
+<title>Login</title>
+<head >
     <h1 class="login">Login</h1>
 </head>
 <body>
-<div class="container">
 
 
-    <form method="POST" action="/login">
-
-        <input name="username" type="text" placeholder="Username"
+<form method="POST" action="/login">
+        <input class="form-control mb-2 mr-sm-2" name="username" type="text" placeholder="Place for your name"
                    autofocus="true"/>
-            <input name="password" type="password" placeholder="Password"/>
-            <button type="submit" class="submit">Log In</button>
-            <h4><a href="/registration">Зарегистрироваться</a></h4>
+    <input class="form-control mb-2 mr-sm-2" name="password" type="password" placeholder="Place for Your password"/>
+    <button type="submit" class=" btn btn-primary mb-2">Log In</button>
+            <h4><a  class="registration" href="/registration">Зарегистрироваться</a></h4>
 
     </form>
-</div>
+
 
 </body>
+<div>
+    <div th:insert="copyright/copyright::bootstrap_script"></div>
+</div>
+
+
+
 </html>

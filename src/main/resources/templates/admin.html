@@ -4,23 +4,35 @@
     <meta charset="UTF-8" >
     <title>Title</title>
 </head>
+<div>
+    <div th:insert="copyright/copyright::header"></div>
+</div>
 <body>
- <div th:each="user:${list}">
-     <a th:text="${user.getName()}" th:href="@{/user/{name}(name=${user.getName()})}">name</a>
-     <div th:if="${user.hasRole('ADMIN')}">
-             <a>admin</a>
-             </div>
-     <div th:if="${!user.hasRole('ADMIN')}">
-         <form th:method="POST" th:action="@{/admin/{name}(name=${user.getName()})}">
-             <input type="submit" value="addAdminRole">
-         </form>
-     </div>
-       <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}">
-           <input type="submit" value="delete">
-       </form>
-     <input type="submit" value="will be soon">
- </div>
+<h2> <span class="badge badge-secondary">Users already</span></h2> <h2>  <span th:text="${list.size()}" class="badge badge-secondary">Users already</span></h2>
+<div th:each="user:${list}">
+    <div class="list-group">
+        <h4> <span class="badge badge-secondary">Сlick to see details</span></h4>
+        <a th:href="@{/user/{name}(name=${user.getName()})}" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h6 class="mb-1" th:text="${user.getName()}">name</h6>
+                <small >soon...</small>
+            </div>
+            <p class="mb-1" th:text="${user.getLinks().size()}">here will be info soon....</p>
+            <div th:if="${!user.hasRole('ADMIN')}">
+                <form th:method="POST" th:action="@{/admin/{name}(name=${user.getName()})}">
+                    <input class="btn btn-primary" type="submit" value="addAdminRole">
+                </form>
+                <form  th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}">
+                <input class="btn btn-primary" type="submit" value="delete">
+            </form>
+            </div>
+            <small th:text="admin" ></small>
+        </a>
+    </div>
 
-
+</div>
 </body>
+<div>
+    <div th:insert="copyright/copyright::bootstrap_script"></div>
+</div>
 </html>
